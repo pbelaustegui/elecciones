@@ -13,9 +13,13 @@ class ResultadoLegisladores {
 		super();
 		this.bancas = bancas;
 		this.listas = listas;
+		this.crearLegisladores()
+		this.armarBloques()
+	}
+	
+	def crearLegisladores(){
 		this.legisladores = []
 		(1..bancas).each {n -> listas.each {l -> legisladores.add(new Legislador(n, l)) } }
-		this.armarBloques()
 	}
 
 	def List<Legislador> ganadores(){
@@ -27,9 +31,8 @@ class ResultadoLegisladores {
 	}
 	
 	def armarBloques(){
-		def List<BloqueLegisladores> _bloques = []
-		listas.each {l -> _bloques.add(new BloqueLegisladores(this.ganadores().findAll {a -> a.getLista() == l }, l)) }
-		_bloques.sort {a, b -> b.cantidadBancas() - a.cantidadBancas()}
-		bloques = _bloques
+		bloques = []
+		listas.each {l -> bloques.add(new BloqueLegisladores(this.ganadores().findAll {a -> a.getLista() == l }, l)) }
+		bloques.sort {a, b -> b.cantidadBancas() - a.cantidadBancas()}
 	}
 }
